@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('vendedor_id');
             $table->foreign('vendedor_id')->references('id')->on('vendedor');
             $table->float('valor', 8, 2);
-            $table->date('data_venda');
+            $table->timestamp('data_venda');
             $table->timestamps();
         });
     }
