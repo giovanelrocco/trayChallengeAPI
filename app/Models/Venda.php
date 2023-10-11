@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Venda extends Model
 {
@@ -24,4 +25,12 @@ class Venda extends Model
      * @var string
      */
     protected $table = 'venda';
+
+    /**
+     * Busca o vendedor.
+     */
+    public function vendedor(): BelongsTo
+    {
+        return $this->belongsTo(Vendedor::class);
+    }
 }
