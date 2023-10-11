@@ -33,14 +33,30 @@ class VendedorController extends Controller
 
     public function create(Request $request)
     {
+        try {
+            $validated = $request->validate([
+                'nome' => 'required',
+                'email' => 'required|unique:App\Models\Vendedor',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $th) {
+            return response($th->validator->errors(), 422);
+        }
+
         $this->repository->saveOrUpdate(null, $request->all());
         return response('', 201)
             ->header('Content-Type', 'application/json');
-
     }
 
     public function update(Request $request)
     {
+        try {
+            $validated = $request->validate([
+                'nome' => 'required',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $th) {
+            return response($th->validator->errors(), 422);
+        }
+
         $this->repository->saveOrUpdate($request->id, $request->all());
 
         return response('', 204)
