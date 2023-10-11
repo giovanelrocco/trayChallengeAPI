@@ -42,7 +42,7 @@ class VendaController extends Controller
     {
         try {
             $validated = $request->validate([
-                'vendedor_id' => 'required|exists:venda,id',
+                'vendedor_id' => 'required|exists:vendedor,id',
                 'valor' => 'required',
                 'data_venda' => 'required',
             ]);

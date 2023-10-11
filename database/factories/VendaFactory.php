@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Vendedor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,9 +18,9 @@ class VendaFactory extends Factory
     public function definition(): array
     {
         return [
-            'vendedor_id' => fake()->randomNumber(),
-            'valor' => fake()->safeEmail(),
-            'data_venda' => fake()->randomNumber(2),
+            'vendedor_id' => Vendedor::factory(),
+            'valor' => fake()->randomFloat(2, 1, 999999),
+            'data_venda' => fake()->date() . ' ' . fake()->time(),
         ];
     }
 }
