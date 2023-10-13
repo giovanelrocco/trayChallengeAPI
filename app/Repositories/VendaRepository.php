@@ -39,4 +39,9 @@ class VendaRepository
 
         return $venda;
     }
+
+    public function destroyByVendedor(int $vendedor_id)
+    {
+        return $this->model->where('vendedor_id', '=', $vendedor_id)->delete();
+    }
 }
