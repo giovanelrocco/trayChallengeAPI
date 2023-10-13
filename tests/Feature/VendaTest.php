@@ -80,7 +80,7 @@ class VendaTest extends TestCase
     public function test_post_vendedor_without_valor(): void
     {
         $vendedor = Vendedor::factory()->create();
-        print_r($vendedor->id);
+
         $response = $this->post('/api/venda', [
             'vendedor_id' => $vendedor->id,
             'valor' => '',

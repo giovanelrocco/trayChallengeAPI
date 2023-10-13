@@ -29,7 +29,6 @@ class VendaController extends Controller
     public function show(int $id)
     {
         $venda = $this->repository->findById($id);
-        // $venda->vendedor;
 
         if (!$venda) {
             throw new \Exception('Venda não encontrada');

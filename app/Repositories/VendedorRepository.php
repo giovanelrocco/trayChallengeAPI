@@ -3,14 +3,18 @@
 namespace App\Repositories;
 
 use App\Models\Vendedor;
+use App\Repositories\VendaRepository;
+use Illuminate\Support\Facades\DB;
 
 class VendedorRepository
 {
     private $model;
+    protected $venda_repository;
 
-    public function __construct(Vendedor $model)
+    public function __construct(Vendedor $model, VendaRepository $venda_repository)
     {
         $this->model = $model;
+        $this->venda_repository = $venda_repository;
     }
 
     public function list()
@@ -41,6 +45,17 @@ class VendedorRepository
 
     public function destroyById(int $id)
     {
-        return Vendedor::find($id)->delete();
+        try
+        {
+            DB::beginTransaction();
+            $this->venda_repository->destroyByVendedor($id);
+            $result = Vendedor::find($id)->delete();
+            DB::commit();
+
+            return $result;
+        } catch (\Illuminate\Database\QueryException $ex) {
+            DB::rollBack();
+            throw new \App\Exceptions\DeletarVendedorException('Erro ao deletar o vendedor');
+        }
     }
 }
