@@ -1,12 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Repositories\VendedorRepository;
 use Illuminate\Http\Request;
+use Laravel\Sanctum\HasApiTokens;
 
 class VendedorController extends Controller
 {
+    use HasApiTokens;
+
     protected $repository;
 
     public function __construct(VendedorRepository $repository)
@@ -25,7 +29,7 @@ class VendedorController extends Controller
         $vendedor = $this->repository->findById($id);
 
         if (!$vendedor) {
-            throw new \Exception('Vendedor não encontrado');
+            return response('Vendedor não encontrado', 404);
         }
 
         return response()->json($vendedor);

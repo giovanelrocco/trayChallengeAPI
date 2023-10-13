@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\VendaController;
-use App\Http\Controllers\VendedorController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\VendaController;
+use App\Http\Controllers\API\VendedorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,18 +16,21 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/login', [AuthController::class, 'authenticate']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/me', [AuthController::class, 'me']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::get('/vendedor', [VendedorController::class, 'index']);
+    Route::post('/vendedor', [VendedorController::class, 'create']);
+    Route::get('/vendedor/{id}', [VendedorController::class, 'show']);
+    Route::put('/vendedor/{id}', [VendedorController::class, 'update']);
+    Route::patch('/vendedor/{id}', [VendedorController::class, 'update']);
+    Route::delete('/vendedor/{id}', [VendedorController::class, 'delete']);
+
+    Route::get('/venda', [VendaController::class, 'index']);
+    Route::post('/venda', [VendaController::class, 'create']);
+    Route::get('/venda/{id}', [VendaController::class, 'show']);
+    Route::get('/vendedor/{vendedor_id}/venda', [VendaController::class, 'indexByVendedor']);
 });
-
-Route::get('/vendedor', [VendedorController::class, 'index']);
-Route::post('/vendedor', [VendedorController::class, 'create']);
-Route::get('/vendedor/{id}', [VendedorController::class, 'show']);
-Route::put('/vendedor/{id}', [VendedorController::class, 'update']);
-Route::patch('/vendedor/{id}', [VendedorController::class, 'update']);
-Route::delete('/vendedor/{id}', [VendedorController::class, 'delete']);
-
-Route::get('/venda', [VendaController::class, 'index']);
-Route::post('/venda', [VendaController::class, 'create']);
-Route::get('/venda/{id}', [VendaController::class, 'show']);
-Route::get('/vendedor/{vendedor_id}/venda', [VendaController::class, 'indexByVendedor']);
