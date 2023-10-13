@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use App\Models\Venda;
 use App\Models\Vendedor;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -11,11 +12,19 @@ class VendaTest extends TestCase
 {
     use RefreshDatabase;
 
+    private $user;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->user = User::factory()->create();
+    }
+
     public function test_get_vendas(): void
     {
         Venda::factory(10)->create();
 
-        $response = $this->get('/api/venda');
+        $response = $this->actingAs($this->user)->get('/api/venda');
 
         $response->assertStatus(200);
         $response->assertJsonIsArray();
@@ -35,7 +44,7 @@ class VendaTest extends TestCase
             'vendedor_id' => $vendedor_nao_mostrar->id,
         ]);
 
-        $response = $this->get('/api/vendedor/' . $vendedor->id . '/venda');
+        $response = $this->actingAs($this->user)->get('/api/vendedor/' . $vendedor->id . '/venda');
 
         $response->assertStatus(200);
         $response->assertJsonIsArray();
@@ -46,7 +55,7 @@ class VendaTest extends TestCase
     {
         $venda = Venda::factory()->create();
 
-        $response = $this->get('/api/venda/' . $venda->id);
+        $response = $this->actingAs($this->user)->get('/api/venda/' . $venda->id);
 
         $response->assertStatus(200);
         $response->assertSimilarJson($venda->toArray());
@@ -56,7 +65,7 @@ class VendaTest extends TestCase
     {
         $vendedor = Vendedor::factory()->create();
 
-        $response = $this->post('/api/venda', [
+        $response = $this->actingAs($this->user)->post('/api/venda', [
             'vendedor_id' => $vendedor->id,
             'valor' => fake()->randomFloat(2, 1, 999999),
             'data_venda' => fake()->date() . ' ' . fake()->time(),
@@ -67,7 +76,7 @@ class VendaTest extends TestCase
 
     public function test_post_venda_without_vendedor(): void
     {
-        $response = $this->post('/api/venda', [
+        $response = $this->actingAs($this->user)->post('/api/venda', [
             'vendedor_id' => '',
             'valor' => fake()->randomFloat(2, 1, 999999),
             'data_venda' => fake()->date() . ' ' . fake()->time(),
@@ -81,7 +90,7 @@ class VendaTest extends TestCase
     {
         $vendedor = Vendedor::factory()->create();
 
-        $response = $this->post('/api/venda', [
+        $response = $this->actingAs($this->user)->post('/api/venda', [
             'vendedor_id' => $vendedor->id,
             'valor' => '',
             'data_venda' => fake()->date() . ' ' . fake()->time(),

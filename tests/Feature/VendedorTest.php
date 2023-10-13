@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use App\Models\Vendedor;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -10,11 +11,19 @@ class VendedorTest extends TestCase
 {
     use RefreshDatabase;
 
+    private $user;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->user = User::factory()->create();
+    }
+
     public function test_get_vendedores(): void
     {
         Vendedor::factory(10)->create();
 
-        $response = $this->get('/api/vendedor');
+        $response = $this->actingAs($this->user)->get('/api/vendedor');
 
         $response->assertStatus(200);
         $response->assertJsonIsArray();
@@ -25,7 +34,7 @@ class VendedorTest extends TestCase
     {
         $vendedor = Vendedor::factory()->create();
 
-        $response = $this->get('/api/vendedor/' . $vendedor->id);
+        $response = $this->actingAs($this->user)->get('/api/vendedor/' . $vendedor->id);
 
         $response->assertStatus(200);
         $response->assertJsonIsObject();
@@ -34,7 +43,7 @@ class VendedorTest extends TestCase
 
     public function test_post_vendedor(): void
     {
-        $response = $this->post('/api/vendedor', [
+        $response = $this->actingAs($this->user)->post('/api/vendedor', [
             'nome' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
         ]);
@@ -44,7 +53,7 @@ class VendedorTest extends TestCase
 
     public function test_post_vendedor_without_name(): void
     {
-        $response = $this->post('/api/vendedor', [
+        $response = $this->actingAs($this->user)->post('/api/vendedor', [
             'nome' => '',
             'email' => fake()->unique()->safeEmail(),
         ]);
@@ -55,7 +64,7 @@ class VendedorTest extends TestCase
 
     public function test_post_vendedor_without_email(): void
     {
-        $response = $this->post('/api/vendedor', [
+        $response = $this->actingAs($this->user)->post('/api/vendedor', [
             'nome' => fake()->name(),
             'email' => '',
         ]);
@@ -68,7 +77,7 @@ class VendedorTest extends TestCase
     {
         $vendedor = Vendedor::factory()->create();
 
-        $response = $this->post('/api/vendedor', [
+        $response = $this->actingAs($this->user)->post('/api/vendedor', [
             'nome' => $vendedor->nome,
             'email' => $vendedor->email,
         ]);
@@ -81,7 +90,7 @@ class VendedorTest extends TestCase
     {
         $vendedor = Vendedor::factory()->create();
 
-        $response = $this->put('/api/vendedor/' . $vendedor->id, [
+        $response = $this->actingAs($this->user)->put('/api/vendedor/' . $vendedor->id, [
             'nome' => fake()->name(),
         ]);
 
@@ -92,7 +101,7 @@ class VendedorTest extends TestCase
     {
         $vendedor = Vendedor::factory()->create();
 
-        $response = $this->put('/api/vendedor/' . $vendedor->id, [
+        $response = $this->actingAs($this->user)->put('/api/vendedor/' . $vendedor->id, [
             'nome' => '',
         ]);
 
@@ -104,7 +113,7 @@ class VendedorTest extends TestCase
     {
         $vendedor = Vendedor::factory()->create();
 
-        $response = $this->put('/api/vendedor/' . $vendedor->id, [
+        $response = $this->actingAs($this->user)->put('/api/vendedor/' . $vendedor->id, [
             'nome' => fake()->name(),
         ]);
 
@@ -115,7 +124,7 @@ class VendedorTest extends TestCase
     {
         $vendedor = Vendedor::factory()->create();
 
-        $response = $this->put('/api/vendedor/' . $vendedor->id, [
+        $response = $this->actingAs($this->user)->put('/api/vendedor/' . $vendedor->id, [
             'nome' => '',
         ]);
 
@@ -127,7 +136,7 @@ class VendedorTest extends TestCase
     {
         $vendedor = Vendedor::factory()->create();
 
-        $response = $this->delete('/api/vendedor/' . $vendedor->id);
+        $response = $this->actingAs($this->user)->delete('/api/vendedor/' . $vendedor->id);
 
         $response->assertNoContent();
     }
