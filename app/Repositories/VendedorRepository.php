@@ -55,7 +55,7 @@ class VendedorRepository
             return $result;
         } catch (\Illuminate\Database\QueryException $ex) {
             DB::rollBack();
-            throw new \Exception('Erro ao deletar a informação');
+            throw new \App\Exceptions\DeletarVendedorException('Erro ao deletar o vendedor');
         }
     }
 }
