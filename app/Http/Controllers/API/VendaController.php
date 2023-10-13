@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Repositories\VendaRepository;
 use Illuminate\Http\Request;
 
@@ -31,7 +32,7 @@ class VendaController extends Controller
         $venda = $this->repository->findById($id);
 
         if (!$venda) {
-            throw new \Exception('Venda não encontrada');
+            return response('Venda não encontrada', 404);
         }
 
         return response()->json($venda);
