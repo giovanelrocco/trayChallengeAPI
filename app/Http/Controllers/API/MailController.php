@@ -28,6 +28,9 @@ class MailController extends Controller
         }
 
         Mail::to(env('ADMIN_EMAIL', 'test@gmail.com'))->send(new \App\Mail\AdminMail($vendas));
+
+        return response('', 201)
+            ->header('Content-Type', 'application/json');
     }
 
     public function enviarLoteEmail()
@@ -41,6 +44,9 @@ class MailController extends Controller
         foreach ($vendedores_com_venda as $vendedor) {
             $this->programarEmail($vendedor['vendedor_id']);
         }
+
+        return response('', 201)
+            ->header('Content-Type', 'application/json');
 
     }
 

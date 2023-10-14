@@ -28,7 +28,7 @@ class VendaRepository
         return $this
             ->model
             ->select('vendedor_id')
-            ->where('data_venda', '=', date("Y-m-d"))
+            ->where('data_venda', 'LIKE', date("Y-m-d") . '%')
             ->groupBy('vendedor_id')
             ->get();
     }
@@ -37,7 +37,7 @@ class VendaRepository
     {
         return $this
             ->model
-            ->where('data_venda', '=', date("Y-m-d"))
+            ->where('data_venda', 'LIKE', date("Y-m-d") . '%')
             ->get();
     }
 
@@ -46,7 +46,7 @@ class VendaRepository
         return $this
             ->model
             ->where('vendedor_id', '=', $vendedor_id)
-            ->where('data_venda', '=', date("Y-m-d"))
+            ->where('data_venda', 'LIKE', date("Y-m-d") . '%')
             ->get();
     }
 
