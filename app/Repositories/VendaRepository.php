@@ -23,6 +23,25 @@ class VendaRepository
         return $this->model->where('vendedor_id', '=', $vendedor_id)->get();
     }
 
+    public function listByData()
+    {
+        return $this
+            ->model
+            ->select('vendedor_id')
+            ->where('data_venda', '=', date("Y-m-d"))
+            ->groupBy('vendedor_id')
+            ->get();
+    }
+
+    public function listByVendedorAndData(int $vendedor_id)
+    {
+        return $this
+            ->model
+            ->where('vendedor_id', '=', $vendedor_id)
+            ->where('data_venda', '=', date("Y-m-d"))
+            ->get();
+    }
+
     public function findById(int $id)
     {
         return $this->model->find($id);

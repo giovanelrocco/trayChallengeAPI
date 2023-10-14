@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\MailController;
 use App\Http\Controllers\API\VendaController;
 use App\Http\Controllers\API\VendedorController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,9 @@ Route::post('/login', [AuthController::class, 'authenticate']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::get('/vendedor/email', [MailController::class, 'enviarLoteEmail']);
+    Route::get('/vendedor/{id}/email', [MailController::class, 'enviarEmail']);
 
     Route::get('/vendedor', [VendedorController::class, 'index']);
     Route::post('/vendedor', [VendedorController::class, 'create']);
