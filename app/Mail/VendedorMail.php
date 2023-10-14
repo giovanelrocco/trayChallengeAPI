@@ -8,7 +8,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class Venda extends Mailable
+class VendedorMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -40,7 +40,7 @@ class Venda extends Mailable
     public function content(): Content
     {
         return new Content(
-            html: 'mail.vendas',
+            html: 'mail.vendedor',
             with: [
                 'vendas' => $this->vendas,
                 'vendedor' => $this->vendedor['nome'],

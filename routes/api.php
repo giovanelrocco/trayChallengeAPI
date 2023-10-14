@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
 
+    Route::get('/admin/email', [MailController::class, 'enviarAdminEmail']);
     Route::get('/vendedor/email', [MailController::class, 'enviarLoteEmail']);
     Route::get('/vendedor/{id}/email', [MailController::class, 'enviarEmail']);
 

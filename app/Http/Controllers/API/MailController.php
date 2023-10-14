@@ -19,9 +19,20 @@ class MailController extends Controller
         $this->vendedor_repository = $vendedor_repository;
     }
 
+    public function enviarAdminEmail()
+    {
+        $vendas = $this->repository->listByData();
+
+        if (count($vendas) < 1) {
+            return response('Venda não encontrada', 404);
+        }
+
+        Mail::to(env('ADMIN_EMAIL', 'test@gmail.com'))->send(new \App\Mail\AdminMail($vendas));
+    }
+
     public function enviarLoteEmail()
     {
-        $vendedores_com_venda = $this->repository->listByData()->toArray();
+        $vendedores_com_venda = $this->repository->listVendedoresByData()->toArray();
 
         if (!$vendedores_com_venda) {
             return response('Sem venda no dia corrente', 404);
@@ -56,7 +67,7 @@ class MailController extends Controller
             return response('Vendedor não encontrada', 404);
         }
 
-        Mail::to($vendedor->email)->send(new \App\Mail\Venda($vendas->toArray(), $vendedor->toArray()));
+        Mail::to($vendedor->email)->send(new \App\Mail\VendedorMail($vendas->toArray(), $vendedor->toArray()));
     }
 
 }
