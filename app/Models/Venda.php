@@ -17,6 +17,8 @@ class Venda extends Model
         'vendedor_id',
         'valor',
         'data_venda',
+        'comissao',
+        'percentual_comissao',
     ];
 
     /**
