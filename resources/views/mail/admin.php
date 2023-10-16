@@ -3,16 +3,15 @@ $lista_vendas = '';
 $total_vendas = 0;
 $total_comissao = 0;
 foreach ($vendas as $venda) {
-    $comissao = $venda['valor'] * .085;
     $total_vendas += $venda['valor'];
-    $total_comissao += $comissao;
+    $total_comissao += $venda['comissao'];
 
     $lista_vendas .= '<tr>' .
     '<td>' . $venda['id'] . '</td>' .
     '<td>' . $venda['vendedor_id'] . '</td>' .
     '<td>' . $venda->vendedor->nome . '</td>' .
     '<td>' . number_format($venda['valor'], 2, ',', '.') . '</td>' .
-    '<td>' . number_format($comissao, 2, ',', '.') . '</td>' .
+    '<td>' . number_format($venda['comissao'], 2, ',', '.') . '</td>' .
         '</tr>';
 }
 ?>

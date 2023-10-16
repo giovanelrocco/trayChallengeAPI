@@ -21,6 +21,8 @@ class VendaFactory extends Factory
             'vendedor_id' => Vendedor::factory(),
             'valor' => fake()->randomFloat(2, 1, 999999),
             'data_venda' => fake()->date() . ' ' . fake()->time(),
+            'comissao' => fake()->randomFloat(2, 1, 9999),
+            'percentual_comissao' => fake()->randomDigitNotNull(),
         ];
     }
 }
