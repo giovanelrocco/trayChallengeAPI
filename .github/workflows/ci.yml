@@ -1,4 +1,4 @@
-name: Testing Laravel with MySQL
+name: Deploing Tests GitHub
 on: [push]
 jobs:
   laravel:
