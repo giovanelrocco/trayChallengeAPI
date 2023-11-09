@@ -46,6 +46,20 @@ services:
                 - '-p${DB_PASSWORD}'
             retries: 3
             timeout: 5s
+
+    # db:
+    #     image: postgres:13
+    #     container_name: postgres-db
+    #     restart: always
+    #     environment:
+    #     POSTGRES_DB: laravel
+    #     POSTGRES_USER: postgres
+    #     POSTGRES_PASSWORD: postgres
+    #     volumes:
+    #     - db_data:/var/lib/postgresql/data
+    #     networks:
+    #     - laravel
+
     mailpit:
         image: 'axllent/mailpit:latest'
         ports:
