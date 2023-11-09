@@ -17,6 +17,6 @@ echo "Running migrations..."
 php artisan migrate --force
 
 echo "Running seeder..."
-php artisan db:seed --force
+php artisan db:seed --force --no-interaction
 
 echo "done deploying"
