@@ -29,21 +29,34 @@ class VendedorRepository
 
     public function save(array $data = [])
     {
-        $vendedor = new Vendedor($data);
+        try {
+            DB::beginTransaction();
+            $vendedor = new Vendedor($data);
+            $vendedor->save();
+            DB::commit();
 
-        $vendedor->save();
-
-        return $vendedor;
+            return $vendedor;
+        } catch (\Illuminate\Database\QueryException $ex) {
+            DB::rollBack();
+            throw new \App\Exceptions\VendedorException('Erro ao salvar o vendedor');
+        }
     }
 
     public function update(int $id, array $data = [])
     {
-        $vendedor = Vendedor::find($id);
-        $vendedor->nome = $data['nome'];
+        try
+        {
+            DB::beginTransaction();
+            $vendedor = Vendedor::find($id);
+            $vendedor->nome = $data['nome'];
+            $vendedor->save();
+            DB::commit();
 
-        $vendedor->save();
-
-        return $vendedor;
+            return $vendedor;
+        } catch (\Illuminate\Database\QueryException $ex) {
+            DB::rollBack();
+            throw new \App\Exceptions\VendedorException('Erro ao atualizar o vendedor');
+        }
     }
 
     public function destroyById(int $id)
@@ -58,7 +71,7 @@ class VendedorRepository
             return $result;
         } catch (\Illuminate\Database\QueryException $ex) {
             DB::rollBack();
-            throw new \App\Exceptions\DeletarVendedorException('Erro ao deletar o vendedor');
+            throw new \App\Exceptions\VendedorException('Erro ao deletar o vendedor');
         }
     }
 }
