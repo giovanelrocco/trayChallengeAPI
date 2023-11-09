@@ -27,16 +27,19 @@ class VendedorRepository
         return $this->model->find($id);
     }
 
-    public function saveOrUpdate(int $id = null, array $data = [])
+    public function save(array $data = [])
     {
-        if (is_null($id)) {
-            $vendedor = new Vendedor;
-            $vendedor->nome = $data['nome'];
-            $vendedor->email = $data['email'];
-        } else {
-            $vendedor = Vendedor::find($id);
-            $vendedor->nome = $data['nome'];
-        }
+        $vendedor = new Vendedor($data);
+
+        $vendedor->save();
+
+        return $vendedor;
+    }
+
+    public function update(int $id, array $data = [])
+    {
+        $vendedor = Vendedor::find($id);
+        $vendedor->nome = $data['nome'];
 
         $vendedor->save();
 
