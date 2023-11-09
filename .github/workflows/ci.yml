@@ -71,10 +71,10 @@ jobs:
         env:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
       
-      - name: Create Test Database
-        run: php artisan db:dbtestcreate
-        env:
-          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
+      # - name: Create Test Database
+      #   run: php artisan db:dbtestcreate
+      #   env:
+      #     DB_PORT: ${{ job.services.mysql.ports['3306'] }}
       
       - name: Run Tests
         run: php artisan test
