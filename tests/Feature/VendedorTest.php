@@ -19,7 +19,7 @@ class VendedorTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_get_vendedores(): void
+    public function testGetVendedores(): void
     {
         Vendedor::factory(10)->create();
 
@@ -30,7 +30,7 @@ class VendedorTest extends TestCase
         $response->assertJsonCount(10);
     }
 
-    public function test_get_vendedor(): void
+    public function testGetVendedor(): void
     {
         $vendedor = Vendedor::factory()->create();
 
@@ -41,7 +41,7 @@ class VendedorTest extends TestCase
         $response->assertExactJson($vendedor->toArray());
     }
 
-    public function test_post_vendedor(): void
+    public function testPostVendedor(): void
     {
         $response = $this->actingAs($this->user)->post('/api/vendedor', [
             'nome' => fake()->name(),
@@ -51,7 +51,7 @@ class VendedorTest extends TestCase
         $response->assertCreated();
     }
 
-    public function test_post_vendedor_without_name(): void
+    public function testPostVendedorWithoutName(): void
     {
         $response = $this->actingAs($this->user)->post('/api/vendedor', [
             'nome' => '',
@@ -62,7 +62,7 @@ class VendedorTest extends TestCase
         $response->assertExactJson(['nome' => ['The nome field is required.']]);
     }
 
-    public function test_post_vendedor_without_email(): void
+    public function testPostVendedorWithoutEmail(): void
     {
         $response = $this->actingAs($this->user)->post('/api/vendedor', [
             'nome' => fake()->name(),
@@ -73,7 +73,7 @@ class VendedorTest extends TestCase
         $response->assertExactJson(['email' => ['The email field is required.']]);
     }
 
-    public function test_post_vendedor_duplicated_email(): void
+    public function testPostVendedorDuplicatedEmail(): void
     {
         $vendedor = Vendedor::factory()->create();
 
@@ -86,7 +86,7 @@ class VendedorTest extends TestCase
         $response->assertExactJson(['email' => ['The email has already been taken.']]);
     }
 
-    public function test_put_vendedor(): void
+    public function testPutVendedor(): void
     {
         $vendedor = Vendedor::factory()->create();
 
@@ -97,7 +97,7 @@ class VendedorTest extends TestCase
         $response->assertNoContent();
     }
 
-    public function test_put_vendedor_without_name(): void
+    public function testPutVendedorWithoutName(): void
     {
         $vendedor = Vendedor::factory()->create();
 
@@ -109,7 +109,7 @@ class VendedorTest extends TestCase
         $response->assertExactJson(['nome' => ['The nome field is required.']]);
     }
 
-    public function test_patch_vendedor(): void
+    public function testPatchVendedor(): void
     {
         $vendedor = Vendedor::factory()->create();
 
@@ -120,7 +120,7 @@ class VendedorTest extends TestCase
         $response->assertNoContent();
     }
 
-    public function test_patch_vendedor_without_name(): void
+    public function testPatchVendedorWithoutName(): void
     {
         $vendedor = Vendedor::factory()->create();
 
@@ -132,7 +132,7 @@ class VendedorTest extends TestCase
         $response->assertExactJson(['nome' => ['The nome field is required.']]);
     }
 
-    public function test_delete_vendedor(): void
+    public function testDeleteVendedor(): void
     {
         $vendedor = Vendedor::factory()->create();
 
