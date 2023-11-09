@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\VendaResource;
 use App\Services\VendaService;
 use Illuminate\Http\Request;
 
@@ -18,13 +19,13 @@ class VendaController extends Controller
     public function index()
     {
         $vendas = $this->service->list();
-        return response()->json($vendas);
+        return VendaResource::collection($vendas);
     }
 
     public function indexByVendedor(Request $request)
     {
         $vendas = $this->service->listByVendedor($request->vendedor_id);
-        return response()->json($vendas);
+        return VendaResource::collection($vendas);
     }
 
     public function show(int $id)
@@ -35,7 +36,7 @@ class VendaController extends Controller
             return response('Venda não encontrada', 404);
         }
 
-        return response()->json($venda);
+        return new VendaResource($venda);
     }
 
     public function create(Request $request)

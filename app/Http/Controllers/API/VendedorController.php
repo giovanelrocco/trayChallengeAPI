@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\VendedorResource;
 use App\Services\VendedorService;
 use Illuminate\Http\Request;
 use Laravel\Sanctum\HasApiTokens;
@@ -21,7 +22,7 @@ class VendedorController extends Controller
     public function index()
     {
         $vendedores = $this->service->list();
-        return response()->json($vendedores);
+        return VendedorResource::collection($vendedores);
     }
 
     public function show(int $id)
@@ -32,7 +33,7 @@ class VendedorController extends Controller
             return response('Vendedor não encontrado', 404);
         }
 
-        return response()->json($vendedor);
+        return new VendedorResource($vendedor);
     }
 
     public function create(Request $request)
