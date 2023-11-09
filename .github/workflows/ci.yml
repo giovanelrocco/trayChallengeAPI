@@ -77,7 +77,7 @@ jobs:
       #     DB_PORT: ${{ job.services.mysql.ports['3306'] }}
       
       - name: Run Tests
-        run: php artisan test
+        run: php artisan test --coverage --min=90
         env:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
 
