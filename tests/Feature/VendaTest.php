@@ -20,7 +20,7 @@ class VendaTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_get_vendas(): void
+    public function testGetVendas(): void
     {
         Venda::factory(10)->create();
 
@@ -31,7 +31,7 @@ class VendaTest extends TestCase
         $response->assertJsonCount(10);
     }
 
-    public function test_get_vendas_by_vendedor(): void
+    public function testGetVendasByVendedor(): void
     {
         $vendedor = Vendedor::factory()->create();
         $vendedor_nao_mostrar = Vendedor::factory()->create();
@@ -51,7 +51,7 @@ class VendaTest extends TestCase
         $response->assertJsonCount(10);
     }
 
-    public function test_get_venda(): void
+    public function testGetVenda(): void
     {
         $venda = Venda::factory()->create();
 
@@ -61,7 +61,7 @@ class VendaTest extends TestCase
         $response->assertSimilarJson($venda->toArray());
     }
 
-    public function test_post_venda(): void
+    public function testPostVenda(): void
     {
         $vendedor = Vendedor::factory()->create();
 
@@ -74,7 +74,7 @@ class VendaTest extends TestCase
         $response->assertCreated();
     }
 
-    public function test_post_venda_without_vendedor(): void
+    public function testPostVendaWithoutVendedor(): void
     {
         $response = $this->actingAs($this->user)->post('/api/venda', [
             'vendedor_id' => '',
@@ -86,7 +86,7 @@ class VendaTest extends TestCase
         $response->assertExactJson(['vendedor_id' => ['The vendedor id field is required.']]);
     }
 
-    public function test_post_vendedor_without_valor(): void
+    public function testPostVendedorWithoutValor(): void
     {
         $vendedor = Vendedor::factory()->create();
 

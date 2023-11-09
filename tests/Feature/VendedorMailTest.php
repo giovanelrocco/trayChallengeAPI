@@ -20,7 +20,7 @@ class VendedorMailTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_email_vendedor(): void
+    public function testEmailVendedor(): void
     {
         $vendedor = Vendedor::factory()->create();
         Venda::factory(10)->create([
@@ -33,7 +33,7 @@ class VendedorMailTest extends TestCase
         $response->assertStatus(201);
     }
 
-    public function test_email_lote(): void
+    public function testEmailLote(): void
     {
         $vendedor = Vendedor::factory()->create();
         Venda::factory(10)->create([

@@ -12,7 +12,7 @@ class AdminMailTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_vendedor_email(): void
+    public function testVendedorEmail(): void
     {
         $vendedor = Vendedor::factory()->create();
         $vendas = Venda::factory(10)->create([
