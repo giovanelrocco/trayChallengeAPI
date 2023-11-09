@@ -3,33 +3,33 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\VendaRepository;
+use App\Services\VendaService;
 use Illuminate\Http\Request;
 
 class VendaController extends Controller
 {
-    protected $repository;
+    protected $service;
 
-    public function __construct(VendaRepository $repository)
+    public function __construct(VendaService $service)
     {
-        $this->repository = $repository;
+        $this->service = $service;
     }
 
     public function index()
     {
-        $vendas = $this->repository->list();
+        $vendas = $this->service->list();
         return response()->json($vendas);
     }
 
     public function indexByVendedor(Request $request)
     {
-        $vendas = $this->repository->listByVendedor($request->vendedor_id);
+        $vendas = $this->service->listByVendedor($request->vendedor_id);
         return response()->json($vendas);
     }
 
     public function show(int $id)
     {
-        $venda = $this->repository->findById($id);
+        $venda = $this->service->findById($id);
 
         if (!$venda) {
             return response('Venda não encontrada', 404);
@@ -50,7 +50,7 @@ class VendaController extends Controller
             return response($th->validator->errors(), 422);
         }
 
-        $this->repository->save($request->all());
+        $this->service->save($request->all());
         return response('', 201)
             ->header('Content-Type', 'application/json');
     }

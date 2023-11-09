@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\VendedorRepository;
+use App\Services\VendedorService;
 use Illuminate\Http\Request;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -11,22 +11,22 @@ class VendedorController extends Controller
 {
     use HasApiTokens;
 
-    protected $repository;
+    protected $service;
 
-    public function __construct(VendedorRepository $repository)
+    public function __construct(VendedorService $service)
     {
-        $this->repository = $repository;
+        $this->service = $service;
     }
 
     public function index()
     {
-        $vendedores = $this->repository->list();
+        $vendedores = $this->service->list();
         return response()->json($vendedores);
     }
 
     public function show(int $id)
     {
-        $vendedor = $this->repository->findById($id);
+        $vendedor = $this->service->findById($id);
 
         if (!$vendedor) {
             return response('Vendedor não encontrado', 404);
@@ -46,7 +46,7 @@ class VendedorController extends Controller
             return response($th->validator->errors(), 422);
         }
 
-        $this->repository->saveOrUpdate(null, $request->all());
+        $this->service->save($request->all());
         return response('', 201)
             ->header('Content-Type', 'application/json');
     }
@@ -61,7 +61,7 @@ class VendedorController extends Controller
             return response($th->validator->errors(), 422);
         }
 
-        $this->repository->saveOrUpdate($request->id, $request->all());
+        $this->service->update($request->id, $request->all());
 
         return response('', 204)
             ->header('Content-Type', 'application/json');
@@ -70,7 +70,7 @@ class VendedorController extends Controller
 
     public function delete(Request $request)
     {
-        $this->repository->destroyById($request->id);
+        $this->service->destroyById($request->id);
 
         return response('', 204)
             ->header('Content-Type', 'application/json');

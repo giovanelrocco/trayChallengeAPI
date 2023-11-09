@@ -8,8 +8,6 @@ class VendaRepository
 {
     private $model;
 
-    const PERCENTUAL_COMISSAO = 8.5;
-
     public function __construct(Venda $model)
     {
         $this->model = $model;
@@ -59,12 +57,7 @@ class VendaRepository
 
     public function save(array $data = [])
     {
-        $venda = new Venda;
-        $venda->vendedor_id = $data['vendedor_id'];
-        $venda->valor = $data['valor'];
-        $venda->data_venda = $data['data_venda'];
-        $venda->comissao = round((VendaRepository::PERCENTUAL_COMISSAO / 100) * $data['valor'], 2);
-        $venda->percentual_comissao = VendaRepository::PERCENTUAL_COMISSAO;
+        $venda = new Venda($data);
 
         $venda->save();
 
