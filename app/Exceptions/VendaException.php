@@ -4,7 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 
-class DeletarVendedorException extends Exception
+class VendaException extends Exception
 {
     public function render($message)
     {

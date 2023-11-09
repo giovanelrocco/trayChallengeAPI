@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Venda;
+use Illuminate\Support\Facades\DB;
 
 class VendaRepository
 {
@@ -57,11 +58,17 @@ class VendaRepository
 
     public function save(array $data = [])
     {
-        $venda = new Venda($data);
+        try {
+            DB::beginTransaction();
+            $venda = new Venda($data);
+            $venda->save();
+            DB::commit();
 
-        $venda->save();
-
-        return $venda;
+            return $venda;
+        } catch (\Illuminate\Database\QueryException $ex) {
+            DB::rollBack();
+            throw new \App\Exceptions\VendaException('Erro ao salvar o vendedor');
+        }
     }
 
     public function destroyByVendedor(int $vendedor_id)
