@@ -58,7 +58,7 @@ class VendaTest extends TestCase
         $response = $this->actingAs($this->user)->get('/api/venda/' . $venda->id);
 
         $response->assertStatus(200);
-        $response->assertSimilarJson($venda->toArray());
+        $response->assertExactJson($venda->toArray());
     }
 
     public function testPostVenda(): void
