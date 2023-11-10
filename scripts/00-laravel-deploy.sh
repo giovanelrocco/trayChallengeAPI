@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 echo "Running composer"
-cp /etc/secrets/.env.production .env.production
 
 composer install --no-dev --working-dir=/var/www/html
 composer update --no-dev --working-dir=/var/www/html
@@ -17,7 +16,7 @@ php artisan route:cache
 echo "Running migrations..."
 php artisan migrate --force
 
-echo "Running seeder..."
-php artisan db:seed --force --no-interaction
+# echo "Running seeder..."
+# php artisan db:seed --force --no-interaction
 
 echo "done deploying"
