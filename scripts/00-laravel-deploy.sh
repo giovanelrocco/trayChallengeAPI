@@ -8,6 +8,9 @@ echo "Running composer"
 composer install
 composer update
 
+echo "Generate Key"
+php artisan key:generate
+
 echo "Clearing caches..."
 php artisan optimize:clear
 
