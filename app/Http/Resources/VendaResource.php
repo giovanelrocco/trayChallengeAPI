@@ -17,10 +17,10 @@ class VendaResource extends JsonResource
         return [
             'id' => $this->id,
             'vendedor_id' => $this->vendedor_id,
-            'valor' => $this->valor,
+            'valor' => (float) $this->valor,
             'data_venda' => $this->data_venda,
-            'comissao' => $this->comissao,
-            'percentual_comissao' => $this->percentual_comissao,
+            'comissao' => (float) $this->comissao,
+            'percentual_comissao' => (float) $this->percentual_comissao,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

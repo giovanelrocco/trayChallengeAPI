@@ -2,7 +2,7 @@ name: Deploing Tests GitHub
 on: [push]
 jobs:
   laravel:
-    name: Laravel (PHP ${{ matrix.php-versions }})
+    name: TrayChallenge (PHP ${{ matrix.php-versions }})
     runs-on: ubuntu-latest
     env:
       DB_DATABASE: ${{ secrets.DB_DATABASE }}
@@ -11,14 +11,17 @@ jobs:
 
     # Docs: https://docs.github.com/en/actions/using-containerized-services
     services:
-      mysql:
-        image: mysql:8.0
+      postgres:
+        image: mdillon/postgis:10
         env:
-          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          MYSQL_DATABASE: ${{ secrets.DB_DATABASE }}
+          POSTGRES_DB: ${{ secrets.DB_DATABASE }}
+          POSTGRES_USER: ${{ secrets.DB_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          POSTGRES_HOST: postgres
         ports:
-          - 3306/tcp
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     strategy:
       fail-fast: false
@@ -33,13 +36,8 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
-          extensions: mbstring, dom, fileinfo, mysql
+          extensions: mbstring, dom, fileinfo, pgsql
           coverage: xdebug
-
-      # Local MySQL service in GitHub hosted environments is disabled by default.
-      # If you are using it instead of service containers, make sure you start it.
-      # - name: Start mysql service
-      #   run: sudo systemctl start mysql.service
 
       - name: Get composer cache directory
         id: composer-cache
@@ -49,9 +47,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          # Use composer.json for key, if composer.lock is not committed.
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
-        #   key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Install Composer dependencies
@@ -60,8 +56,8 @@ jobs:
       - name: Prepare the application
         run: |
           php -r "file_exists('.env') || copy('.env.example', '.env');"
-          php -r "file_exists('.env.testing') || copy('.env.testing.example', '.env.testing');"
           php artisan key:generate
+          php artisan about
 
       - name: Clear Config
         run: php artisan config:clear
@@ -69,19 +65,14 @@ jobs:
       - name: Run Migration
         run: php artisan migrate -v
         env:
-          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
-      
-      # - name: Create Test Database
-      #   run: php artisan db:dbtestcreate
-      #   env:
-      #     DB_PORT: ${{ job.services.mysql.ports['3306'] }}
+          DB_PORT: ${{ job.services.postgres.ports['5432'] }}
       
       - name: Run Tests
         run: php artisan test --coverage --min=80
         env:
-          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
+          DB_PORT: ${{ job.services.postgres.ports['5432'] }}
 
       - name: Test with phpunit
         run: vendor/bin/phpunit --coverage-text
         env:
-          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
+          DB_PORT: ${{ job.services.postgres.ports['5432'] }}
