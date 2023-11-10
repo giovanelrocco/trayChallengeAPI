@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 echo "Running composer"
 
-composer install --no-dev --working-dir=/var/www/html
-composer update --no-dev --working-dir=/var/www/html
+# Para rodar em produção
+# composer install --no-dev --working-dir=/var/www/html
+# composer update --no-dev --working-dir=/var/www/html
 
-echo "Generate Key"
-php artisan key:generate
+composer install
+composer update
 
 echo "Clearing caches..."
 php artisan optimize:clear
