@@ -3,6 +3,8 @@ echo "Running composer"
 
 source .env
 
+echo "${APP_NAME} ${APP_ENV}"
+
 if [ ${APP_ENV} = 'production' ]; then
     echo 'Configurando Deploy Producao'
     composer install --no-dev --working-dir=/var/www/html
