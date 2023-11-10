@@ -21,44 +21,19 @@ services:
         networks:
             - sail
         depends_on:
-            - mysql
+            - pgsql
             - mailpit
-    mysql:
-        image: 'mysql'
-        ports:
-            - '${FORWARD_DB_PORT:-3306}:3306'
-        environment:
-            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
-            MYSQL_ROOT_HOST: '%'
-            MYSQL_DATABASE: '${DB_DATABASE}'
-            MYSQL_USER: '${DB_USERNAME}'
-            MYSQL_PASSWORD: '${DB_PASSWORD}'
-        volumes:
-            - 'sail-mysql:/var/lib/mysql'
-            - './vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
-        networks:
-            - sail
-        healthcheck:
-            test:
-                - CMD
-                - mysqladmin
-                - ping
-                - '-p${DB_PASSWORD}'
-            retries: 3
-            timeout: 5s
 
-    # db:
-    #     image: postgres:13
-    #     container_name: postgres-db
-    #     restart: always
-    #     environment:
-    #     POSTGRES_DB: laravel
-    #     POSTGRES_USER: postgres
-    #     POSTGRES_PASSWORD: postgres
-    #     volumes:
-    #     - db_data:/var/lib/postgresql/data
-    #     networks:
-    #     - laravel
+    pgsql:
+        ports:
+            - '${DB_PORT:-5432}:5432'
+        image: postgres:13
+        container_name: pgsql
+        restart: always
+        environment:
+            POSTGRES_DB: '${DB_DATABASE}'
+            POSTGRES_USER: '${DB_USERNAME}'
+            POSTGRES_PASSWORD: '${DB_PASSWORD}'
 
     mailpit:
         image: 'axllent/mailpit:latest'

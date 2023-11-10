@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 echo "Running composer"
 cp /etc/secrets/.env.production .env.production
-# composer global require hirak/prestissimo
+
 composer install --no-dev --working-dir=/var/www/html
 composer update --no-dev --working-dir=/var/www/html
 
