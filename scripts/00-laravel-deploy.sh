@@ -1,12 +1,17 @@
 #!/usr/bin/env bash
 echo "Running composer"
 
-# Para rodar em produção
-# composer install --no-dev --working-dir=/var/www/html
-# composer update --no-dev --working-dir=/var/www/html
+source .env
 
-composer install
-composer update
+if [ ${APP_ENV} = 'local' ]; then
+    echo 'Configurando Deploy local'
+    composer install
+    composer update
+else
+    echo 'Configurando Deploy Producao'
+    composer install --no-dev --working-dir=/var/www/html
+    composer update --no-dev --working-dir=/var/www/html
+fi
 
 echo "Generate Key"
 php artisan key:generate
@@ -22,8 +27,5 @@ php artisan route:cache
 
 echo "Running migrations..."
 php artisan migrate --force
-
-# echo "Running seeder..."
-# php artisan db:seed --force --no-interaction
 
 echo "done deploying"
