@@ -3,16 +3,17 @@ echo "Running composer"
 
 source .env
 
-if [ ${APP_ENV} = 'local' ]; then
-    echo 'Configurando Deploy local'
-    composer install
-    composer update
-else
+if [ ${APP_ENV} = 'production' ]; then
     echo 'Configurando Deploy Producao'
     composer install --no-dev --working-dir=/var/www/html
     composer update --no-dev --working-dir=/var/www/html
+    cp /etc/secrets/.env.production .env.production
+else
+    echo 'Configurando Deploy local'
+    composer install
+    composer update
 fi
-
+git 
 echo "Generate Key"
 php artisan key:generate
 
