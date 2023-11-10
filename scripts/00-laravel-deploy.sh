@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
 echo "Running composer"
 
-source .env
+echo "Buscando arquivo .env"
+if test -f .env; then
+    echo "Lendo arquivo .env"
+    source .env
+elif test -f /etc/secrets/.env; then
+    echo "Lendo arquivo /etc/secrets/.env"
+    source /etc/secrets/.env
+fi
+
 source /etc/secrets/.env
 
 echo "${APP_NAME} ${APP_ENV}"
