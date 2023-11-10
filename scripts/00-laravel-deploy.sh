@@ -1,30 +1,18 @@
 #!/usr/bin/env bash
 echo "Running composer"
 
-echo "Buscando arquivo .env"
-if test -f .env; then
-    echo "Lendo arquivo .env"
-    source .env
-elif test -f /etc/secrets/.env; then
-    echo "Lendo arquivo /etc/secrets/.env"
-    source /etc/secrets/.env
-fi
-
-source /etc/secrets/.env
-
-echo "${APP_NAME} ${APP_ENV}"
-
-if [ ${APP_ENV} = 'production' ]; then
+echo "Buscando Ambiente"
+if test -f /etc/secrets/.env.production; then
     echo 'Configurando Deploy Producao'
     composer install --no-dev --working-dir=/var/www/html
     composer update --no-dev --working-dir=/var/www/html
-    cp /etc/secrets/.env .env
+    cp /etc/secrets/.env.production .env
 else
     echo 'Configurando Deploy local'
     composer install
     composer update
 fi
-git 
+
 echo "Generate Key"
 php artisan key:generate
 
