@@ -16,6 +16,13 @@ class AdminMailTest extends TestCase
 
     protected function setUp(): void
     {
+        echo 'DB_DATABASE';
+        print_r(env('DB_DATABASE'));
+        echo 'APP_ENV';
+        print_r(env('APP_ENV'));
+        echo 'DB_CONNECTION';
+        print_r(env('DB_CONNECTION'));
+
         parent::setUp();
         $this->user = User::factory()->create();
     }

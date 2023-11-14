@@ -56,11 +56,17 @@ jobs:
       - name: Prepare the application
         run: |
           php -r "file_exists('.env') || copy('.env.example', '.env');"
+          php -r "file_exists('.env.testing') || copy('.env.testing.example', '.env.testing');"
           php artisan key:generate
           php artisan about
 
       - name: Clear Config
         run: php artisan config:clear
+
+      - name: Create Test Database
+        run: php artisan db:db-test-create
+        env:
+          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
 
       - name: Run Migration
         run: php artisan migrate -v
