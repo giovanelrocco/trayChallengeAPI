@@ -67,7 +67,7 @@ class VendaRepository
             return $venda;
         } catch (\Illuminate\Database\QueryException $ex) {
             DB::rollBack();
-            throw new \App\Exceptions\VendaException('Erro ao salvar o vendedor');
+            throw new \App\Exceptions\VendaException('Erro ao salvar o vendedor.');
         }
     }
 

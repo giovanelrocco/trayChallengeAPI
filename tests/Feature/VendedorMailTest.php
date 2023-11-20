@@ -20,6 +20,24 @@ class VendedorMailTest extends TestCase
         $this->user = User::factory()->create();
     }
 
+    public function testEmailLoteWithoutVenda(): void
+    {
+        Vendedor::factory()->create();
+        Venda::truncate();
+
+        $response = $this->actingAs($this->user)->get('/api/vendedor/email');
+        $response->assertStatus(201);
+    }
+
+    public function testEmailVendedorWithoutVenda(): void
+    {
+        $vendedor = Vendedor::factory()->create();
+
+        $response = $this->actingAs($this->user)->get('/api/vendedor/' . $vendedor->id . '/email');
+
+        $response->assertStatus(201);
+    }
+
     public function testEmailVendedor(): void
     {
         $vendedor = Vendedor::factory()->create();

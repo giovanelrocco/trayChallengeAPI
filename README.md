@@ -20,6 +20,9 @@ utilize o comando `git clone git@github.com:giovanelrocco/trayChallengeAPI.git`
 Após clonar o repositório, você precisa configurar o seu ambiente.
 Basta você copiar o arquivo .env.docker.example para um novo arquivo .env `cp .env.docker.example .env`.
 
+## Limpar cache de configurações
+Para garantir que as configurações estejam atualizadas, utilize o comando `docker exec {nome-maquina-docker} php artisan config:clear`. Este comando deve ser utilizado caso seja feita alterações nos arquivos `.env`.
+
 ## Rodar o Composer
 Após configurar o ambiente, você deverá rodar o composer para carregar as bibliotecas necessárias para o projeto `composer update`.
 
@@ -39,7 +42,7 @@ Para garantir que seu banco esteja atualizado, você precisa utilizar o comando
 Para inserir informações no banco de dados utilizar `docker exec {nome-maquina-docker} php artisan db:seed --class=VendedorSeeder` para popular a tabela de vendedor e `docker exec traychallengeapi php artisan db:seed --class=VendaSeeder` para popular a tabela de venda e vendedor.
 
 ## Testes
-Para rodar os testes existentes utilize o comando `docker exec {nome-maquina-docker} php artisan test`.
+Para rodar os testes existentes utilize o comando `docker exec {nome-maquina-docker} php artisan test`. Caso queira verificar a cobertura dos testes, adicione o parâmetro `--coverage`.
 
 ## Rotas
 Para facilitar o uso, você pode importar os arquivos de environment e collection que estão na pasta requisicoes-postman. Você encontrará todas as rotas disponíveis pelo sistema e o token já estará configurado assim que você fizer a chamada de login.
@@ -47,3 +50,6 @@ Para facilitar o uso, você pode importar os arquivos de environment e collectio
 
 ## Projeto Online
 O projeto está disponível online pela plataforma [Render](https://render.com) e é possível acessar os endpoints pelo endereço [https://traychallengeapi.onrender.com](https://traychallengeapi.onrender.com) com as credenciais disponibilizadas. Caso no primeiro acesso o serviço não esteja disponível, aguarde alguns minutos e tente novamente pois o sistema precisa fazer o deploy para subir o serviço.
+
+## Comandos na maquina Docker
+Caso você utilize os comandos diretamente na maquina Docker, você pode apenas remover `docker exec {nome-maquina-docker}` para utilizar os comandos.

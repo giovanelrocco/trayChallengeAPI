@@ -41,6 +41,14 @@ class VendedorTest extends TestCase
         $response->assertExactJson($vendedor->toArray());
     }
 
+    public function testGetVendedorNotFound(): void
+    {
+        $response = $this->actingAs($this->user)->get('/api/vendedor/100000000');
+
+        $response->assertStatus(404);
+        $response->assertSeeText('Vendedor não encontrado.');
+    }
+
     public function testPostVendedor(): void
     {
         $response = $this->actingAs($this->user)->post('/api/vendedor', [

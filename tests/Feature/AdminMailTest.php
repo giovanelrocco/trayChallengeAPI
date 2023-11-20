@@ -20,7 +20,17 @@ class AdminMailTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_admin_vendedor(): void
+    public function testEmailAdminWithoutVenda(): void
+    {
+        Venda::truncate();
+        Vendedor::factory()->create();
+
+        $response = $this->actingAs($this->user)->get('/api/admin/email');
+
+        $response->assertStatus(201);
+    }
+
+    public function testEmailAdmin(): void
     {
         $vendedor = Vendedor::factory()->create();
         Venda::factory(10)->create([
