@@ -39,7 +39,7 @@ Para garantir que seu banco esteja atualizado, você precisa utilizar o comando
 Para inserir informações no banco de dados utilizar `docker exec {nome-maquina-docker} php artisan db:seed --class=VendedorSeeder` para popular a tabela de vendedor e `docker exec traychallengeapi php artisan db:seed --class=VendaSeeder` para popular a tabela de venda e vendedor.
 
 ## Testes
-Para rodar os testes existentes utilize o comando `docker exec {nome-maquina-docker} php artisan test`.
+Para rodar os testes existentes utilize o comando `docker exec {nome-maquina-docker} php artisan test`. Caso queira verificar a cobertura dos testes, adicione o parâmetro `--coverage`.
 
 ## Rotas
 Para facilitar o uso, você pode importar os arquivos de environment e collection que estão na pasta requisicoes-postman. Você encontrará todas as rotas disponíveis pelo sistema e o token já estará configurado assim que você fizer a chamada de login.

@@ -23,7 +23,7 @@ class MailService
         $vendas = $this->repository->listByData();
 
         if (count($vendas) < 1) {
-            return response('Venda não encontrada', 404);
+            return response('Venda não encontrada.', 404);
         }
 
         Mail::to(env('ADMIN_EMAIL', 'test@gmail.com'))->send(new \App\Mail\AdminMail($vendas));
@@ -35,7 +35,7 @@ class MailService
         $vendedores_com_venda = $this->repository->listVendedoresByData()->toArray();
 
         if (!$vendedores_com_venda) {
-            return response('Sem venda no dia corrente', 404);
+            return response('Sem venda no dia corrente.', 404);
         }
 
         foreach ($vendedores_com_venda as $vendedor) {
@@ -61,13 +61,13 @@ class MailService
         $vendas = $this->repository->listByVendedorAndData($vendedor_id);
 
         if (count($vendas) < 1) {
-            return response('Venda não encontrada', 404);
+            return response('Venda não encontrada.', 404);
         }
 
         $vendedor = $this->vendedor_repository->findById($vendedor_id);
 
         if (!$vendedor) {
-            return response('Vendedor não encontrada', 404);
+            return response('Vendedor não encontrada.', 404);
         }
 
         Mail::to($vendedor->email)->send(new \App\Mail\VendedorMail($vendas->toArray(), $vendedor->toArray()));

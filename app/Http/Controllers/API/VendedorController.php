@@ -30,7 +30,7 @@ class VendedorController extends Controller
         $vendedor = $this->service->findById($id);
 
         if (!$vendedor) {
-            return response('Vendedor não encontrado', 404);
+            return response('Vendedor não encontrado.', 404);
         }
 
         return new VendedorResource($vendedor);

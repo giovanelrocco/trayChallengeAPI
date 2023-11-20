@@ -61,6 +61,14 @@ class VendaTest extends TestCase
         $response->assertExactJson($venda->toArray());
     }
 
+    public function testGetVendaNotFound(): void
+    {
+        $response = $this->actingAs($this->user)->get('/api/venda/100000000');
+
+        $response->assertStatus(404);
+        $response->assertSeeText('Venda não encontrada');
+    }
+
     public function testPostVenda(): void
     {
         $vendedor = Vendedor::factory()->create();

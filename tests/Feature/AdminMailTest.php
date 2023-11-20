@@ -16,18 +16,21 @@ class AdminMailTest extends TestCase
 
     protected function setUp(): void
     {
-        echo 'DB_DATABASE';
-        print_r(env('DB_DATABASE'));
-        echo 'APP_ENV';
-        print_r(env('APP_ENV'));
-        echo 'DB_CONNECTION';
-        print_r(env('DB_CONNECTION'));
-
         parent::setUp();
         $this->user = User::factory()->create();
     }
 
-    public function test_admin_vendedor(): void
+    public function testEmailAdminWithoutVenda(): void
+    {
+        Venda::truncate();
+        Vendedor::factory()->create();
+
+        $response = $this->actingAs($this->user)->get('/api/admin/email');
+
+        $response->assertStatus(201);
+    }
+
+    public function testEmailAdmin(): void
     {
         $vendedor = Vendedor::factory()->create();
         Venda::factory(10)->create([
