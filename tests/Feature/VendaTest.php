@@ -20,6 +20,15 @@ class VendaTest extends TestCase
         $this->user = User::factory()->create();
     }
 
+    public function testRotasProtegida(): void
+    {
+        $venda = Venda::factory()->create();
+
+        $this->get('/api/venda')->assertStatus(500);
+        $this->get('/api/venda/' . $venda->id)->assertStatus(500);
+        $this->post('/api/venda', [])->assertStatus(500);
+    }
+
     public function testGetVendas(): void
     {
         Venda::factory(10)->create();

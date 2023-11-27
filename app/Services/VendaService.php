@@ -9,7 +9,7 @@ class VendaService
 
     protected $repository;
 
-    const PERCENTUAL_COMISSAO = 8.5;
+    public const PERCENTUAL_COMISSAO = 8.5;
 
     public function __construct(VendaRepository $repository)
     {
