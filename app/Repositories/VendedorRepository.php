@@ -19,7 +19,7 @@ class VendedorRepository
 
     public function list()
     {
-        return $this->model->all();
+        return $this->model->paginate(20);
     }
 
     public function findById(int $id)
