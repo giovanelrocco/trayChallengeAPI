@@ -16,12 +16,12 @@ class VendaRepository
 
     public function list()
     {
-        return $this->model->all();
+        return $this->model->paginate(20);
     }
 
     public function listByVendedor(int $vendedor_id)
     {
-        return $this->model->where('vendedor_id', '=', $vendedor_id)->get();
+        return $this->model->where('vendedor_id', '=', $vendedor_id)->paginate(20);
     }
 
     public function listVendedoresByData()

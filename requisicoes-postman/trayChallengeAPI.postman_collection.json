@@ -41,13 +41,23 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/api/vendedor",
+							"raw": "{{url}}/api/vendedor?page=2&items_per_page=20",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"vendedor"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "items_per_page",
+									"value": "20"
+								}
 							]
 						}
 					},
@@ -125,14 +135,14 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/api/vendedor/2",
+							"raw": "{{url}}/api/vendedor/1",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"vendedor",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -244,14 +254,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/api/venda/2",
+							"raw": "{{url}}/api/venda/1",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"venda",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -279,14 +289,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/api/vendedor/3/venda",
+							"raw": "{{url}}/api/vendedor/221/venda",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"vendedor",
-								"3",
+								"221",
 								"venda"
 							]
 						}
@@ -315,13 +325,23 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/api/venda",
+							"raw": "{{url}}/api/venda?page=2&items_per_page=20",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"venda"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "items_per_page",
+									"value": "20"
+								}
 							]
 						}
 					},
@@ -350,7 +370,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"vendedor_id\": 1,\n    \"valor\": 190.00,\n    \"data_venda\": \"2023-10-14 00:00:00\"\n}",
+							"raw": "{\n    \"vendedor_id\": 2,\n    \"valor\": 1900.00,\n    \"data_venda\": \"2023-11-13 00:00:00\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -404,14 +424,14 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/api/vendedor/41/email",
+							"raw": "{{url}}/api/vendedor/2/email",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"vendedor",
-								"41",
+								"2",
 								"email"
 							]
 						}
@@ -515,7 +535,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"test@email.com\",\n    \"password\": \"test123\"\n}",
+					"raw": "{\n    \"email\": \"giovanelr@gmail.com\",\n    \"password\": \"SnCymhUmgCkDAVR\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"

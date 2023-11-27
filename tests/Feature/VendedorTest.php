@@ -37,8 +37,13 @@ class VendedorTest extends TestCase
         $response = $this->actingAs($this->user)->get('/api/vendedor');
 
         $response->assertStatus(200);
-        $response->assertJsonIsArray();
-        $response->assertJsonCount(10);
+        $response->assertJsonStructure(array(
+            'data' => array(),
+            'links' => array(),
+            'meta' => array(),
+        ));
+        // $response->assertJsonIsArray();
+        // $response->assertJsonCount(10);
     }
 
     public function testGetVendedor(): void

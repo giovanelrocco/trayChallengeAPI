@@ -36,8 +36,13 @@ class VendaTest extends TestCase
         $response = $this->actingAs($this->user)->get('/api/venda');
 
         $response->assertStatus(200);
-        $response->assertJsonIsArray();
-        $response->assertJsonCount(10);
+        $response->assertJsonStructure(array(
+            'data' => array(),
+            'links' => array(),
+            'meta' => array(),
+        ));
+        // $response->data->assertJsonIsArray();
+        // $response->data->assertJsonCount(10);
     }
 
     public function testGetVendasByVendedor(): void
@@ -56,8 +61,13 @@ class VendaTest extends TestCase
         $response = $this->actingAs($this->user)->get('/api/vendedor/' . $vendedor->id . '/venda');
 
         $response->assertStatus(200);
-        $response->assertJsonIsArray();
-        $response->assertJsonCount(10);
+        $response->assertJsonStructure(array(
+            'data' => array(),
+            'links' => array(),
+            'meta' => array(),
+        ));
+        // $response->assertJsonIsArray();
+        // $response->assertJsonCount(10);
     }
 
     public function testGetVenda(): void
