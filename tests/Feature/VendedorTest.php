@@ -19,6 +19,17 @@ class VendedorTest extends TestCase
         $this->user = User::factory()->create();
     }
 
+    public function testRotasProtegida(): void
+    {
+        $vendedor = Vendedor::factory()->create();
+
+        $this->get('/api/vendedor')->assertStatus(500);
+        $this->get('/api/vendedor/' . $vendedor->id)->assertStatus(500);
+        $this->post('/api/vendedor', [])->assertStatus(500);
+        $this->put('/api/vendedor/' . $vendedor->id, [])->assertStatus(500);
+        $this->patch('/api/vendedor/' . $vendedor->id, [])->assertStatus(500);
+    }
+
     public function testGetVendedores(): void
     {
         Vendedor::factory(10)->create();
